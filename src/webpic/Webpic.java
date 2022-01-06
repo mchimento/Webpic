@@ -27,15 +27,10 @@ public class Webpic extends Shell {
     private Label lblLink;
     private Label lblTitle;
     private Label lblTag;
-    private Label lblFilters;
-    private Button chbForSale;
-    private Button chbGot;
     private Button btnClose;
     private Button btnMkDiv;
     private Button btnGenLink;
-    private Label lblOthers;
     private Label lblName;
-    private Text txtFilters;    
     private Button btnCopy;
     private Button btnClear;
     private Text txtName;
@@ -75,16 +70,11 @@ public class Webpic extends Shell {
     	txtTag.setEnabled(true);
     	txtTitle.setEnabled(true);
     	txtTag.setEnabled(true);
-    	txtFilters.setEnabled(true);
     	txtName.setEnabled(true);
     	lblLink.setEnabled(true);
     	lblTitle.setEnabled(true);
     	lblTag.setEnabled(true);
-    	lblFilters.setEnabled(true);
-    	lblOthers.setEnabled(true);
     	lblName.setEnabled(true);
-    	chbForSale.setEnabled(true);    
-    	chbGot.setEnabled(true);
     	btnMkDiv.setEnabled(true);
     	btnCopy.setEnabled(true);
     	btnClear.setEnabled(true);
@@ -95,31 +85,14 @@ public class Webpic extends Shell {
     	txtTag.setEnabled(false);
     	txtTitle.setEnabled(false);
     	txtTag.setEnabled(false);
-    	txtFilters.setEnabled(false);
     	txtName.setEnabled(false);
     	lblLink.setEnabled(false);
     	lblTitle.setEnabled(false);
     	lblTag.setEnabled(false);
-    	lblFilters.setEnabled(false);
-    	lblOthers.setEnabled(false);
     	lblName.setEnabled(false);
-    	chbForSale.setEnabled(false);    
-    	chbGot.setEnabled(false);
     	btnMkDiv.setEnabled(false);
     	btnCopy.setEnabled(false);
     	btnClear.setEnabled(false);
-	}
-	
-	private String prepareChb() {
-		String xs = "";
-		
-		if (chbForSale.getSelection()) {
-			xs = xs + "ForSale,";
-	    }
-		if (chbGot.getSelection()) {
-		   xs = xs + "GOT,";
-		}		
-		return xs;
 	}
 
 	/**
@@ -191,44 +164,14 @@ public class Webpic extends Shell {
 		txtTag.setEnabled(false);
 		txtTag.setBounds(314, 228, 113, 30);
 		
-		lblFilters = new Label(this, SWT.NONE);
-		lblFilters.setEnabled(false);
-		lblFilters.setFont(SWTResourceManager.getFont("Ubuntu", 14, SWT.NORMAL));
-		lblFilters.setBounds(20, 280, 70, 27);
-		lblFilters.setText("Filters:");
-		
-		chbForSale = new Button(this, SWT.CHECK);
-		chbForSale.setFont(SWTResourceManager.getFont("Ubuntu", 14, SWT.NORMAL));
-		chbForSale.setEnabled(false);
-		chbForSale.setBounds(20, 313, 113, 30);
-		chbForSale.setText("For Sale");
-		
-		chbGot = new Button(this, SWT.CHECK);
-		chbGot.setFont(SWTResourceManager.getFont("Ubuntu", 14, SWT.NORMAL));
-		chbGot.setEnabled(false);
-		chbGot.setBounds(121, 313, 113, 30);
-		chbGot.setText("Göteborg");
-		
 		btnClose = new Button(this, SWT.NONE);
-		btnClose.setBounds(537, 379, 70, 34);
+		btnClose.setBounds(537, 300, 70, 34);
 		btnClose.setText("Close");
 		
 		btnMkDiv = new Button(this, SWT.NONE);
 		btnMkDiv.setEnabled(false);
-		btnMkDiv.setBounds(434, 379, 97, 34);
+		btnMkDiv.setBounds(434, 300, 97, 34);
 		btnMkDiv.setText("Make Div");
-		
-		lblOthers = new Label(this, SWT.NONE);
-		lblOthers.setToolTipText("");
-		lblOthers.setEnabled(false);
-		lblOthers.setFont(SWTResourceManager.getFont("Ubuntu", 14, SWT.NORMAL));
-		lblOthers.setBounds(274, 280, 126, 27);
-		lblOthers.setText("Other Filters:");
-		
-		txtFilters = new Text(this, SWT.BORDER);
-		txtFilters.setToolTipText("Separate filters names with commas");
-		txtFilters.setEnabled(false);
-		txtFilters.setBounds(274, 313, 333, 30);
 		
 		btnCopy = new Button(this, SWT.NONE);
 		btnCopy.setEnabled(false);
@@ -247,7 +190,7 @@ public class Webpic extends Shell {
 		
 		btnClear = new Button(this, SWT.NONE);
 		btnClear.setEnabled(false);
-		btnClear.setBounds(330, 379, 97, 34);
+		btnClear.setBounds(330, 300, 97, 34);
 		btnClear.setText("Clear All");
 
 		btnGenLink.addListener(SWT.Selection, new Listener()
@@ -289,31 +232,11 @@ public class Webpic extends Shell {
 		{
 		    @Override
 		    public void handleEvent(Event event)
-		    {	    	
-		    	String filters_chb = prepareChb();
-		    	String filters_txt = txtFilters.getText();
-		    	String[] filters;
-		    		
-		    	if (filters_chb.equals(""))
-		    		if (filters_txt.equals(""))
-		    		    filters = null;
-		    		else {
-		    			filters = filters_txt.split(",");
-		    		}
-		    	else {
-		    		if (filters_txt.equals("")) {
-		    			filters = filters_chb.split(",");				 
-		    		}
-		    		else {
-		    			System.out.println("What?");
-		    			filters = (filters_chb+filters_txt).split(",");
-		    		}
-		    	}
+		    {		    	
 		    	DivTemplate div = new DivTemplate(txtLink.getText(),
 		    			                          txtTitle.getText(),
 		    			                          txtTag.getText(),
-		    			                          txtName.getText(),
-		    			                          filters);
+		    			                          txtName.getText());
 		    	String web_div = div.mkDiv();		    	
 		    	try {
 		    		Display display = Display.getDefault();
@@ -340,10 +263,7 @@ public class Webpic extends Shell {
 		    	txtTag.setText("");
 		    	txtTitle.setText("");
 		    	txtName.setText("");
-		    	txtFilters.setText("");
 		    	txtUrl.setText("");
-		    	chbForSale.setSelection(false);
-		    	chbGot.setSelection(false);
 		        disableAll();
 		        
 		    }
@@ -368,7 +288,7 @@ public class Webpic extends Shell {
 	 */
 	protected void createContents() {
 		setText("Webpic");
-		setSize(626, 468);
+		setSize(626, 384);
 	}
 
 	@Override
